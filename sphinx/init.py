@@ -21,7 +21,6 @@ false = 0
 
 
 
-
 from edu.cmu.sphinx.decoder import Decoder
 from edu.cmu.sphinx.decoder import ResultListener
 from edu.cmu.sphinx.decoder.pruner import SimplePruner
@@ -57,12 +56,13 @@ from java.util.logging import Level
 from java.net import URL
 from java.util import ArrayList
 from edu.cmu.sphinx.util.props import *
+import sys
 # if (args.length < 1) {
 
-#can't seem to get it working with absolute paths
-#this means that this file always has to be called from a 
-#directory up
-cm = ConfigurationManager(URL("file:sphinx\helloworld.config.xml")) ;
+#current directory is passed as an argument for now cause
+#os.getdir() returns System32 folde on windows ._.
+currentDir =  sys.argv[1]
+cm = ConfigurationManager(URL("file:" + currentDir + "\sphinx.config.xml")) ;
 
 recognizer = cm.lookup("recognizer");
 recognizer.allocate();
@@ -74,21 +74,20 @@ if (not microphone.startRecording()):
     recognizer.deallocate();
     exit(1);
 
-print("Say: (Good morning | Hello) ( Bhiksha | Evandro | Paul | Philip | Rita | Will )");
+#print("Recognizer initialize, start speaking now");
 
 # loop the recognition until the programm exits.
 while (true):
     try:
-
-        print("Start speaking. Press Ctrl-C to quit.");
-
         result = recognizer.recognize();
 
         if (result is not None ):
             resultText = result.getBestFinalResultNoFiller();
-            print("You said: " + resultText + '');
+            print(resultText);
         else:
-            print("I can't hear what you said.");
+            pass
+            #print("I can't hear what you said.");
     except KeyboardInterrupt:
         print "Bye"
         sys.exit()
+

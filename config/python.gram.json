@@ -1,0 +1,44 @@
+{
+	"settings": {
+		"fileTypes": ["py"]
+	},
+
+
+	"start": [
+		{
+			"insert": "def [[%fname]]([[$fnargs]]):[[$fnbody]]",
+			"alias": "function"
+		}
+	],
+
+
+	"fnargs": [
+		{
+			"insert": "",
+			"alias": "continue"
+		},
+
+		{
+			"insert": "[[%var]][[$moreArgs]]",
+			"alias": "next"
+		}
+	],
+	"fnbody": [
+		{
+			"insert":"",
+			"alias":"continue"
+		}
+	],
+	"moreArgs": [
+		{
+			"insert": "",
+			"alias": "continue"
+		},
+
+		{
+			"insert": ",[[%var]][[$moreArgs]]",
+			"alias": "next"
+		}
+	]
+
+}

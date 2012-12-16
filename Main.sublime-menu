@@ -1,0 +1,19 @@
+[  
+	{  
+	    "id": "file",  
+	    "children":  
+	    [  
+	        {
+	        	"id": "wrap",  
+	        	"caption": "preech",
+	        	"children": 
+	        	[
+		        	{"id": "preech_speech_on","command": "speech","args": {"toggle":"on"}, "caption":"Start Dictation"},
+		        	{"id": "preech_speech_off","command": "speech","args": {"toggle":"off"},"caption":"Stop Dictation"},
+		        	{"id": "preechconf","command": "config","caption":"Reload config files"}
+	        	]
+	         }
+
+	    ]  
+	}  
+] 
