@@ -4,4 +4,4 @@
 
 grammar core;
 
-public <start> =  function | continue | next;
+public <start> =  function | continue | next | add | constructuor | class | arithmetic;

@@ -22,16 +22,15 @@ class speechCommand(sublime_plugin.TextCommand):
 
 	def insertText(self,offset,text):
 		
-		self.view.insert(self.edit,offset,text)
 		print 'we got an action!' + text
 		#insert the text
 		self.edit = self.view.begin_edit()
 		pos = self.view.sel()
 		pos = pos[0].begin()
 		self.view.insert(self.edit, pos, text )
-
-		self.view.sel().clear()
-		self.view.sel().add( pos + offset)
+		if (offset != 0):
+			self.view.sel().clear()
+			self.view.sel().add( pos + offset)
 		self.view.end_edit(self.edit)
 
 

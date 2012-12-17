@@ -39,62 +39,81 @@ class inputProcessor():
 			self.getSym()
 
 
-	def moreArgs(self):
+	def fname(self):
 		value = self.__next_word()
 		if (False):
 			pass
-		elif (value =='continue'):
+		elif (value =='add'):
 			act = action()
-			act.setInsert('')
-#			self.view.insert(edit, pos, '' )
-		elif (value =='next'):
-			act = action()
-			act.setInsert(',')
-#			self.view.insert(edit, pos, ',' )
-			act.setOffset(1)
-			self.actionQue.put(act)
-			act = action()
-			act.setInsert('')
-			act.setOffset(0)
-			self.getSym()
-			#alright we need to wait for her to enter a symbol name 
+			act.setInsert('add')
+#			self.view.insert(edit, pos, 'add' )
 			act.setOffset(0)
 			self.actionQue.put(act)
+		elif (value =='constructuor'):
 			act = action()
-			act.setInsert('')
+			act.setInsert('__init__')
+#			self.view.insert(edit, pos, '__init__' )
 			act.setOffset(0)
-			self.moreArgs()
+			self.actionQue.put(act)
 		else:
-			self.moreArgs()
+			self.fname()
+
+
+	def classname(self):
+		value = self.__next_word()
+		if (False):
+			pass
+		elif (value =='arithmetic'):
+			act = action()
+			act.setInsert('Arithmetic')
+#			self.view.insert(edit, pos, 'Arithmetic' )
+			act.setOffset(0)
+			self.actionQue.put(act)
+		else:
+			self.classname()
 
 
 	def start(self):
 		value = self.__next_word()
 		if (False):
 			pass
+		elif (value =='class'):
+			act = action()
+			act.setInsert('class ():\n')
+#			self.view.insert(edit, pos, 'class ():\n' )
+			act.setOffset(6)
+			self.actionQue.put(act)
+			act = action()
+			act.setInsert('')
+			self.classname()
+			act.setOffset(5)
+			self.actionQue.put(act)
+			act = action()
+			act.setInsert('')
+			self.classbody()
+			act.setOffset(0)
+			self.actionQue.put(act)
 		elif (value =='function'):
 			act = action()
-			act.setInsert('def ():')
-#			self.view.insert(edit, pos, 'def ():' )
+			act.setInsert('def ():\n')
+#			self.view.insert(edit, pos, 'def ():\n' )
 			act.setOffset(4)
 			self.actionQue.put(act)
 			act = action()
 			act.setInsert('')
-			act.setOffset(0)
-			self.getSym()
-			#alright we need to wait for her to enter a symbol name 
+			self.fname()
 			act.setOffset(1)
 			self.actionQue.put(act)
 			act = action()
 			act.setInsert('')
-			act.setOffset(0)
 			self.fnargs()
-			act.setOffset(-12)
+			act.setOffset(4)
 			self.actionQue.put(act)
 			act = action()
 			act.setInsert('')
-			act.setOffset(0)
 			self.fnbody()
+			act.setOffset(0)
+			self.actionQue.put(act)
 		else:
 			self.start()
 
@@ -107,6 +126,8 @@ class inputProcessor():
 			act = action()
 			act.setInsert('')
 #			self.view.insert(edit, pos, '' )
+			act.setOffset(0)
+			self.actionQue.put(act)
 		elif (value =='next'):
 			act = action()
 			act.setInsert('')
@@ -115,15 +136,15 @@ class inputProcessor():
 			self.actionQue.put(act)
 			act = action()
 			act.setInsert('')
-			act.setOffset(0)
-			self.getSym()
 			#alright we need to wait for her to enter a symbol name 
+			self.getSym()
 			act.setOffset(0)
 			self.actionQue.put(act)
 			act = action()
 			act.setInsert('')
-			act.setOffset(0)
 			self.moreArgs()
+			act.setOffset(0)
+			self.actionQue.put(act)
 		else:
 			self.fnargs()
 
@@ -136,8 +157,41 @@ class inputProcessor():
 			act = action()
 			act.setInsert('')
 #			self.view.insert(edit, pos, '' )
+			act.setOffset(0)
+			self.actionQue.put(act)
 		else:
 			self.fnbody()
+
+
+	def moreArgs(self):
+		value = self.__next_word()
+		if (False):
+			pass
+		elif (value =='continue'):
+			act = action()
+			act.setInsert('')
+#			self.view.insert(edit, pos, '' )
+			act.setOffset(0)
+			self.actionQue.put(act)
+		elif (value =='next'):
+			act = action()
+			act.setInsert(',')
+#			self.view.insert(edit, pos, ',' )
+			act.setOffset(1)
+			self.actionQue.put(act)
+			act = action()
+			act.setInsert('')
+			#alright we need to wait for her to enter a symbol name 
+			self.getSym()
+			act.setOffset(0)
+			self.actionQue.put(act)
+			act = action()
+			act.setInsert('')
+			self.moreArgs()
+			act.setOffset(0)
+			self.actionQue.put(act)
+		else:
+			self.moreArgs()
 
 
 #specifies what text to insert and then where to move

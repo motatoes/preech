@@ -166,9 +166,8 @@ class Config(sublime_plugin.TextCommand):
 				inputfile.write("			act = action()\n")
 				inputfile.write("			act.setInsert('" + toinsert + "')\n")
 				inputfile.write("#			self.view.insert(edit, pos, '"+ toinsert + "' )\n")
-				
-				regex = re.compile( nonterminals)
 
+				regex = re.compile( nonterminals )
 				decrement = 0
 				for m in regex.finditer(j['insert']): 
 					nontermName = m.group()[3:-2]
@@ -176,21 +175,26 @@ class Config(sublime_plugin.TextCommand):
 					cursorGoto = m.start()
 					nontermChar = m.group()[2]
 
+					inputfile.write("			act.setOffset(" + str(cursorGoto - decrement) + ")\n")
+					inputfile.write("			self.actionQue.put(act)\n")
+					inputfile.write("			act = action()\n")
+					inputfile.write("			act.setInsert('')\n")
+
+					print cursorGoto,decrement
 					print m.group()[3:-2] + str(m.start()) + '*****'
 					#move the cursor,
-					inputfile.write("			act.setOffset(" + str(cursorGoto - decrement) + ")\n")
-					inputfile.write("			self.actionQue.put(act)\n")		
-					inputfile.write("			act = action()\n")		
-					inputfile.write("			act.setInsert('')\n")
-					inputfile.write("			act.setOffset(0)\n")
 					if (nontermChar == "$"):
 						inputfile.write("			self." + str(nontermName) + "()\n")
-					elif (m.group()[2] == "%"):
-						inputfile.write("			" + "self.getSym()\n")
+					elif (nontermChar == "%"):
 						inputfile.write("			" + "#alright we need to wait for her to enter a symbol name \n")
+						inputfile.write("			" + "self.getSym()\n")
 
-					decrement += nontermSize + cursorGoto
+					decrement = nontermSize + cursorGoto
+				else:
+					inputfile.write("			act.setOffset(0)\n")
+					inputfile.write("			self.actionQue.put(act)\n")			
 					
+
 			print 'elsing'
 			inputfile.write("		else:\n")
 			inputfile.write("			self." + i +"()\n")

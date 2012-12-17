@@ -6,12 +6,31 @@
 
 	"start": [
 		{
-			"insert": "def [[%fname]]([[$fnargs]]):[[$fnbody]]",
+			"insert": "class [[$classname]]():\\n[[$classbody]]",
+			"alias": "class"
+		},
+		{
+			"insert": "def [[$fname]]([[$fnargs]]):\\n[[$fnbody]]",
 			"alias": "function"
 		}
 	],
 
-
+	"classname": [
+		{
+			"insert": "Arithmetic",
+			"alias": "arithmetic"
+		}
+	],
+	"fname": [
+		{
+			"insert": "add",
+			"alias" : "add"
+		},
+		{
+			"insert": "__init__",
+			"alias" : "constructuor"
+		}
+	],
 	"fnargs": [
 		{
 			"insert": "",
