@@ -13,30 +13,5 @@
 		"insert": "b",
 		"alias": "press beta"
 		}
-	],
-
-	"fnargs": [
-		{
-			"insert": "",
-			"alias": "continue"
-		},
-
-		{
-			"insert": "$$var$moreArgs",
-			"alias": "next"
-		}
-	],
-
-	"moreArgs": [
-		{
-			"insert": "",
-			"alias": "continue"
-		},
-
-		{
-			"insert": ",$$var$moreArgs",
-			"alias": "next"
-		}
 	]
-
 }

@@ -4,4 +4,4 @@
 
 grammar core;
 
-public <start> =  function | continue | next | add | constructuor | class | arithmetic;
+public <start> =  double equals | divide | maximum | not equals | result | pass | else if | variable one | next | add | constructuor | if | arithmetic | function | return | assignment | greater than | variable two | multiply | class | less than or equals | indent | greater than or equals | less than | times | new line | continue | plus | divided by | else clause | expression | minus;

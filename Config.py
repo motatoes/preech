@@ -49,11 +49,11 @@ class Config(sublime_plugin.TextCommand):
 			if (self.is_array(jsonList[i])):
 				for j in jsonList[i]:
 					aliaslist[ j['alias'] ] = None
-					print j['alias']
+
 			#otherwise, just get insert and alias
 			else:
 				aliaslist[ jsonList[i]['alias'] ] = None
-				print jsonList[i]['alias']
+
 
 
 		return aliaslist
@@ -72,7 +72,7 @@ class Config(sublime_plugin.TextCommand):
 
 		for alias in aliases:
 			rules = rules + " | " 	+ alias
-			print alias
+
 
 		rules = rules.replace('|','', 1) + ";"
 		sphinxfile.write(rules)
@@ -80,11 +80,10 @@ class Config(sublime_plugin.TextCommand):
 		#close all the open files
 		sphinxfile.close()
 
-
-		#this function generates the python code
-		#That is going to be able to accept it's 
-		#input is the parsed json config, output is 
-		#written to the file 'InputProcessor.py'
+	#this function generates the python code
+	#That is going to be able to accept it's 
+	#input is the parsed json config, output is 
+	#written to the file 'InputProcessor.py'
 	def generateCode(self, grammarList):
 
 		dir = sublime.packages_path()
@@ -135,11 +134,29 @@ class Config(sublime_plugin.TextCommand):
 		inputfile.write("		else:\n")
 		inputfile.write("			self.getSym()\n")
 
+		defaultStates = ""
+		if ("*" in grammarList):
+			inputfile.write("	def " + "acceptDefaultStates(self,value):\n")
+			inputfile.write("		if (False):\n")
+			inputfile.write("			pass\n")
+			for ds in grammarList["*"]:
+				toinsert = ds['insert']
+				toinsert = toinsert.replace("\n","\\n")
+				toinsert = toinsert.replace("\t","\\t")
+				inputfile.write("		elif (value == '" + ds['alias'] + "' ):\n")
+				inputfile.write("			act = action()\n")
+				inputfile.write("			act.setInsert('" + toinsert + "')\n")
+				inputfile.write("			act.setOffset(0)\n")
+				inputfile.write("			self.actionQue.put(act)\n")
+				inputfile.write("			return True\n")
+
+			inputfile.write("		return False\n")
+
 
 
 		for i in grammarList:
 			#skip the settings key\n")
-			if (i == 'settings'):
+			if (i == 'settings' or i == '*'):
 				continue
 			print i
 
@@ -147,6 +164,10 @@ class Config(sublime_plugin.TextCommand):
 			inputfile.write("\n\n	def " + i + "(self):\n")
 			#inputfile.write("		value =  recognizer.getNextWord():\n")
 			inputfile.write("		value = self.__next_word()\n")
+
+
+			inputfile.write("		if(self.acceptDefaultStates(value)):\n")
+			inputfile.write("			self." + i + "()\n")
 
 			inputfile.write("		if (False):\n")
 			inputfile.write("			pass\n")
@@ -160,6 +181,9 @@ class Config(sublime_plugin.TextCommand):
 
 				nonterminals = r"\[\[[^\]]*\]\]"
 				toinsert = re.sub( nonterminals, "", rule['insert'] )
+				toinsert = toinsert.replace('\n','\\n') ## escape newlines
+				rule_nonewlines = rule['insert']
+
 				alias = rule['alias']
 
 				inputfile.write("		elif (value =='" + alias + "'):\n")
@@ -169,7 +193,7 @@ class Config(sublime_plugin.TextCommand):
 
 				regex = re.compile( nonterminals )
 				decrement = 0
-				for m in regex.finditer(j['insert']): 
+				for m in regex.finditer(rule_nonewlines): 
 					nontermName = m.group()[3:-2]
 					nontermSize =  len(m.group())
 					cursorGoto = m.start()
@@ -180,8 +204,7 @@ class Config(sublime_plugin.TextCommand):
 					inputfile.write("			act = action()\n")
 					inputfile.write("			act.setInsert('')\n")
 
-					print cursorGoto,decrement
-					print m.group()[3:-2] + str(m.start()) + '*****'
+
 					#move the cursor,
 					if (nontermChar == "$"):
 						inputfile.write("			self." + str(nontermName) + "()\n")

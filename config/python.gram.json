@@ -3,14 +3,24 @@
 		"fileTypes": ["py"]
 	},
 
+	"*": [
+		{
+			"insert": "    ",
+			"alias": "indent"
+		},
+		{
+			"insert": "\n",
+			"alias": "new line"
+		}
+	],
 
 	"start": [
 		{
-			"insert": "class [[$classname]]():\\n[[$classbody]]",
+			"insert": "class [[$classname]]():\n[[$classbody]]",
 			"alias": "class"
 		},
 		{
-			"insert": "def [[$fname]]([[$fnargs]]):\\n[[$fnbody]]",
+			"insert": "def [[$fname]]([[$fnargs]]):\n[[$fnbody]]",
 			"alias": "function"
 		}
 	],
@@ -27,8 +37,34 @@
 			"alias" : "add"
 		},
 		{
+			"insert": "multiply",
+			"alias" : "multiply"
+		},
+		{
+			"insert": "divide",
+			"alias" : "divide"
+		},
+		{
+			"insert": "max",
+			"alias" : "maximum"
+		},
+		{
 			"insert": "__init__",
 			"alias" : "constructuor"
+		}
+	],
+	"var": [
+		{
+			"insert": "var1",
+			"alias":  "variable one"
+		},
+		{
+			"insert": "var2",
+			"alias":  "variable two"
+		},
+		{
+			"insert": "result",
+			"alias":  "result"
 		}
 	],
 	"fnargs": [
@@ -36,26 +72,117 @@
 			"insert": "",
 			"alias": "continue"
 		},
-
 		{
-			"insert": "[[%var]][[$moreArgs]]",
+			"insert": "[[$var]][[$moreArgs]]",
 			"alias": "next"
 		}
 	],
 	"fnbody": [
 		{
-			"insert":"",
-			"alias":"continue"
+			"insert": " [[$var]] = [[$expression]]\n[[$fnbody]]",
+			"alias": "assignment"
+		},
+		{
+			"insert": " if ([[$boolexp]]):\n[[$ifbody]]\n[[$elseClause]]",
+			"alias": "if"
+		},
+		{
+			"insert": "return [[$expression]]",
+			"alias": "return"
+		},
+		{
+			"insert": "",
+			"alias": "continue"
 		}
 	],
+
+	"elseClause": [
+		{
+			"insert": "elif ([[$boolexp]]):\n[[$ifbody]]\n[[$elseClause]]",
+			"alias": "else if"
+		},
+		{
+			"insert": "else:\n[[$ifbody]]",
+			"alias": "else clause"
+		},
+		{
+			"insert": "",
+			"alias": "continue"
+		}
+	],
+	"ifbody": [
+		{
+			"insert": " [[$var]] = [[$expression]]\n",
+			"alias": "assignment"
+		},
+		{
+			"insert": "pass",
+			"alias": "pass"
+		}
+	],
+	"boolexp": [
+		{
+			"insert": " [[$var]] == [[$var]]",
+			"alias": "double equals"
+		},
+		{
+			"insert": " [[$var]] > [[$var]]",
+			"alias": "greater than"
+		},
+		{
+			"insert": " [[$var]] < [[$var]]",
+			"alias": "less than"
+		},
+		{
+			"insert": " [[$var]] >= [[$var]]",
+			"alias": "greater than or equals"
+		},
+		{
+			"insert": " [[$var]] <= [[$var]]",
+			"alias": "less than or equals"
+		},
+		{
+			"insert": " [[$var]] <> [[$var]]",
+			"alias": "not equals"
+		}
+	],
+	"expression": [
+		{
+			"insert": " [[$var]][[$expressionTerm]]",
+			"alias": "expression"
+		}
+	],
+	
+	"expressionTerm": [
+		{
+			"insert": " + [[$var]][[$expressionTerm]]",
+			"alias": "plus"
+		},
+		{
+			"insert": " - [[$var]][[$expressionTerm]]",
+			"alias": "minus"
+		},
+		{
+			"insert": " / [[$var]][[$expressionTerm]]",
+			"alias": "divided by"
+		},
+		{
+			"insert": " * [[$var]][[$expressionTerm]]",
+			"alias": "times"
+		},
+		{
+			"insert": "\n",
+			"alias": "continue"
+		}
+	],
+
 	"moreArgs": [
 		{
 			"insert": "",
 			"alias": "continue"
 		},
-
 		{
-			"insert": ",[[%var]][[$moreArgs]]",
+			"insert": ",[[$var]][[$moreArgs]]",
 			"alias": "next"
 		}
 	]
