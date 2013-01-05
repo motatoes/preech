@@ -5,7 +5,7 @@ Check out a demo video: http://youtu.be/58OhMEKnHa0
 
 Prerequisites
 =============
-- Java SE: Java SE 6 Development Kit or better. Go to http://java.sun.com, and select "J2SE" from popular downloads. Download JDK.
+- Java SE: Java SE 6 Development Kit or better. Go to http://java.sun.com, and select "J2SE" from popular downloads. Download JDK. It needs to be in your PATH variable so that typing "java" in a command line/terminal works.
 - Sublime text 2 (http://www.sublimetext.com/2)
 
 How to test it 
@@ -24,7 +24,10 @@ Starting speech recognition
 - it's best to have your command panel open when testing to see the recognized words and any other errors. you can open it by clicking CTRL + ` (that's not a colon it's the key above your TAB key on most keyboards) 
 - Start a new file. don't call it anything so that sublime's autocomplete doesn't interfere with the speech
 - MAKE SURE THE CURSOR IS IN THE FILE , then click on file > Preech > Start Dictation 
+- A Java command prompt should show up. Just minimize it and selct the file again. Wait a little until the recognizer initializes, then start speaking. What you say should appear in the command panel.
 
-
+Bugs
+--------
+There's a problem with "stop dictation". You can't do two consecutive speech dications in the same session. You have to restart sublime text 2 in between. and then start dictation again
 
 
