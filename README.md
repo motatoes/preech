@@ -11,9 +11,9 @@ How to test it
 - Unzip the file
 - Open your sublime text 2 editor
 - Click on preferences > browse packages ...
-- copy the folder "preech" into the packages folder
+- copy the folder "preech" (that you just unzipped) into the folder that shows up (the packages folder)
 - restart sublime text 2
-- click File , you should see the Preech menu there
+- click File , you should see the Preech menu there (http://i.imgur.com/piqj3.png)
 
 
 
